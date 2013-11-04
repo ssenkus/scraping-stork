@@ -81,7 +81,7 @@ for link in catLinks:
     f.write("\n\nCONTENT-TABLE\n\n")
     f.write(str(contentsTable))
     f.write("\n\n###################################################\n\n")
-'''
+''' 
 raw_input("\n\nPress Enter to continue...\n\n")
 
 f.close()
