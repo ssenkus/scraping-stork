@@ -52,7 +52,7 @@ for link in catLinks:
         print "\n"
     print "------------------------------------------------"
 
-    
+'''    
     print "\n\n\tWRAPPER\n\n"
     
     try:
@@ -72,6 +72,7 @@ for link in catLinks:
     except:
         pass    
     print "\n\n###################################################\n\n"
+'''
 '''    
     f.write(text + " -> " + href + "\n")
     f.write("\n\nBREADCRUMB CONTAINER\n\n")
