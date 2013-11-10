@@ -37,6 +37,10 @@ class Page:
 
 class IndexPage(Page):
 
+    def __init__(self, name, url, browser):
+        Page.__init__(self, name, url, browser)
+        self.getLeftNavLinks()
+
     def getLeftNavLinks(self):
         catLinks = self.soup.find(id="left-navigation").find_all('a')
         cat = {}
@@ -94,7 +98,6 @@ class CategoryPage(Page):
 br = Browser();
 baseUrl = "http://www.storkbabygiftbaskets.com/"
 homepage = IndexPage('Home', baseUrl, br)
-homepage.getLeftNavLinks()
 
 '''
   
