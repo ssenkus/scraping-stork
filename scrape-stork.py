@@ -7,24 +7,61 @@ os.system('cls')
 # Open file to dump page data into
 #f = open("datafile.txt", "w")
 
+
+script_dir = os.getcwd()
+print script_dir
+
+
+##############################################################
+
+class Page:
+
+    soup = ''
+    def __init__(self, name, url, browser):
+        self.url = url
+        self.name = name
+        self.browser = browser
+        self.getName()
+
+    def getName(self):
+        print self.name
+
+    def getHtml(self):
+        response = self.browser.open(self.url)
+        self.soup = BeautifulSoup(response)
+        return self.soup
+
+    def getBreadcrumbContainer(self):
+        return 'asdaf'
+
+##############################################################
+
+class IndexPage(Page):
+
+    def getLeftNavLinks(self):
+        catLinks = self.soup.find(id="left-navigation").find_all('a')
+        cat = {}
+        for link in catLinks:        
+            
+            cat[link.string] = link.get('href')
+#            text = link.string
+            newPage = Page(link.string,link.get('href'), br);
+        return cat
+
+##############################################################
+
+
 # Get root page
 br = Browser();
-url = "http://www.storkbabygiftbaskets.com/"
-response = br.open(url)
-soup = BeautifulSoup(response)
+baseUrl = "http://www.storkbabygiftbaskets.com/"
+homepage = IndexPage('Home', baseUrl, br)
+homepage.getHtml()
+print homepage.getLeftNavLinks()
 
-# Find and loop through all categories based off left navigation links
-catLinks = soup.find(id="left-navigation").find_all('a')
-categories = [];
-print "Links:"
-print "\n\n###################################################"
-
+'''
 for link in catLinks:
     # get category links
-    href = link.get('href')
-    text = link.string
 
-    categories.append(href)
     resp = br.open(url + href)
     #  Now parse through each category page     
     soup = BeautifulSoup(resp)
@@ -37,8 +74,10 @@ for link in catLinks:
     print text + " -> " + href + "\n"
     print "\n\n\tBREADCRUMB CONTAINER\n\n"
     count = 0
+
     # Search through container div
     for node in breadcrumbContainer:
+        print node
         count += 1
         print "Breadcrumb Trail {0}".format(count)
         # get all anchor tags
@@ -52,7 +91,6 @@ for link in catLinks:
         print "\n"
     print "------------------------------------------------"
 
-'''    
     print "\n\n\tWRAPPER\n\n"
     
     try:
@@ -64,7 +102,6 @@ for link in catLinks:
         pass
     print "\n\n\tCONTENT-TABLE\n\n"
     try:
-        
         for node in contentsTable:
             links = contentsTable.findAll('a')
             for link in links:
@@ -85,4 +122,4 @@ for link in catLinks:
 ''' 
 raw_input("\n\nPress Enter to continue...\n\n")
 
-f.close()
+# f.close()
